@@ -15,14 +15,14 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 const styles = theme => ({
 	root: {
 		width: '100%',
-		marginTop: theme.spacing.unit * 3,
+		marginTop: theme.spacing(3),
 		overflowX: "auto"
 	},
 	table: {
 		minWidth: 1080
 	},
 	progress: {
-		margin: theme.spacing.unit * 2
+		margin: theme.spacing(2)
 	}
 })
 
@@ -84,7 +84,7 @@ class App extends Component {
 						</TableRow>
 					</TableHead>
 					<TableBody>
-						{this.state.customers ? this.state.customers.map(c => { return (<Customer key={c.id} id={c.id} image={c.image} name={c.name} birthday={c.birthday} gender={c.gender} job={c.job} />) })
+						{this.state.customers ? this.state.customers.map(c => { return (<Customer key={c.ID} id={c.ID} image={c.IMAGE} name={c.NAME} birthday={c.BIRTHDAY} gender={c.GENDER} job={c.JOB} />) })
 							:
 							<TableRow>
 								<TableCell colSpan="6" align="center">
