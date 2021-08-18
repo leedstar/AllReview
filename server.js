@@ -27,7 +27,7 @@ const upload = multer({ dest : './upload'})
 
 app.get('/api/customers', (rep, res) => {
     conn.query(
-        "SELECT * FROM CUSTOMER",
+        "SELECT * FROM CUSTOMER WHERE ISDELETED = 0",
         (err, rows, field) => {
             res.send(rows);
 
@@ -39,7 +39,7 @@ app.use('/image', express.static('./upload'));
 
 app.post('/api/customers', upload.single('image'), (req,res) => {
 
-    let sql = 'INSERT INTO CUSTOMER VALUES(NULL, ?,?,?,?,?)';
+    let sql = 'INSERT INTO CUSTOMER VALUES(NULL, ?,?,?,?,?, 0, now())';
     let image = '/image/' + req.file.filename;
     let name = req.body.name;
     let birthday = req.body.birthday;
@@ -54,8 +54,16 @@ app.post('/api/customers', upload.single('image'), (req,res) => {
 });
 
 
-app.get('/api/hello', (req, res) => {
-    res.send({ message: 'Hello Express!' });
-})
+
+
+app.delete('/api/customers/:id', (req, res) =>{
+    let sql = 'UPDATE CUSTOMER SET ISDELETED = 1 WHERE ID = ?';
+    let params = [req.params.id];
+    conn.query(sql, params,
+        (err, rows, fields) => {
+            res.send(rows);
+        })
+});
+
 
 app.listen(port, () => console.log(`Listening on port  ${port}`));
